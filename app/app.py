@@ -1,3 +1,4 @@
+import os
 from flask import Flask, render_template
 from pymongo import MongoClient
 import joblib
@@ -6,8 +7,10 @@ import numpy as np
 # Flask App starten
 app = Flask(__name__)
 
+
+
 # === MongoDB-Verbindung ===
-mongo_uri = "mongodb+srv://admin:1234@cluster0.88lshmb.mongodb.net/?retryWrites=true&w=majority"
+mongo_uri = os.getenv("MONGO_URI", "mongodb://mongo:27017/")
 client = MongoClient(mongo_uri)
 db = client["LN1"]
 teams_col = db["NBA-Teams"]
@@ -19,9 +22,9 @@ features = ["wins", "losses", "winPct", "conferenceRank", "divisionRank"]
 
 @app.route("/")
 def home():
-    # Nur 2024er Teams anzeigen
-    teams = list(teams_col.find({"season": "2024"}, {"_id": 0, "team_name": 1, "team_code": 1, "logo": 1}))
+    teams = list(teams_col.find({}, {"_id": 0, "name": 1, "code": 1, "logo": 1}))
     return render_template("index.html", teams=teams)
+
 
 @app.route("/prediction/<team_code>")
 def prediction(team_code):
@@ -37,4 +40,5 @@ def prediction(team_code):
     return render_template("prediction.html", team=team_stats, prediction=round(probability, 2))
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(host="0.0.0.0", port=5000, debug=True)
+
