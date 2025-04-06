@@ -3,7 +3,6 @@ from flask import Flask, render_template
 from pymongo import MongoClient
 import joblib
 import numpy as np
-import sys
 import logging
 
 logging.basicConfig(level=logging.INFO)
@@ -46,7 +45,6 @@ def home():
 
 @app.route("/prediction/<team_code>")
 def prediction(team_code):
-    logging.info("🏀 Anfrage für: " + team_code)
     team_stats = stats_col.find_one({"team_code": team_code.upper(), "season": "2023"})
     
     if not team_stats:
