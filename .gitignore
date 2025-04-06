@@ -1,0 +1,40 @@
+# === Python ===
+__pycache__/
+*.py[cod]
+*.egg
+*.egg-info/
+dist/
+build/
+
+# === Virtual Environment ===
+venv/
+env/
+.venv/
+.env/
+
+# === VS Code ===
+.vscode/
+
+# === Log files ===
+*.log
+
+# === dotenv Dateien ===
+.env
+.env.*
+
+# === Flask cache ===
+instance/
+*.db
+
+# === Jupyter Notebooks (falls verwendet) ===
+.ipynb_checkpoints/
+
+# === Docker ===
+*.pid
+*.tar
+docker-compose.override.yml
+
+# === PyInstaller ===
+*.spec
+
+# === mac
