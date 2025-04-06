@@ -3,7 +3,7 @@ import json
 from pymongo import MongoClient
 
 # === MongoDB-Verbindung (Azure) ===
-mongo_uri = "mongodb+srv://albanese11:Kosova11@nba-cosmosdb.global.mongocluster.cosmos.azure.com/?tls=true&authMechanism=SCRAM-SHA-256&retrywrites=false&maxIdleTimeMS=120000"
+mongo_uri = "mongodb+srv://albanese11:Microsoft1@nba-cosmosdb.global.mongocluster.cosmos.azure.com/?tls=true&authMechanism=SCRAM-SHA-256&retrywrites=false&maxIdleTimeMS=120000"
 client = MongoClient(mongo_uri)
 db = client["LN1"]
 stats_collection = db["NBA-Standings"]

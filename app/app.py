@@ -11,7 +11,7 @@ logging.basicConfig(level=logging.INFO)
 app = Flask(__name__)
 
 # === MongoDB-Verbindung ===
-client = MongoClient("mongodb+srv://albanese11:Kosova11@nba-cosmosdb.global.mongocluster.cosmos.azure.com/?tls=true&authMechanism=SCRAM-SHA-256&retrywrites=false&maxIdleTimeMS=120000")
+client = MongoClient("mongodb+srv://albanese11:Microsoft1@nba-cosmosdb.global.mongocluster.cosmos.azure.com/?tls=true&authMechanism=SCRAM-SHA-256&retrywrites=false&maxIdleTimeMS=120000")
 db = client["LN1"]
 teams_col = db["NBA-Teams"]
 stats_col = db["NBA-Standings"]  # 2023-Daten für Prediction
