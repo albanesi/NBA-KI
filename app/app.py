@@ -17,7 +17,7 @@ teams_col = db["NBA-Teams"]
 stats_col = db["NBA-Standings"]  # 2023-Daten für Prediction
 
 # === Modell laden ===
-model = joblib.load("../nba_champion_model.pkl")
+model = joblib.load("./nba_champion_model.pkl")
 features = ["wins", "losses", "winPct", "conferenceRank", "divisionRank"]
 
 # === Funktion zum Logo-Update ===
