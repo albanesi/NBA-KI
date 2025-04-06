@@ -40,5 +40,5 @@ def prediction(team_code):
     return render_template("prediction.html", team=team_stats, prediction=round(probability, 2))
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=5000, debug=True)
+    app.run(host="0.0.0.0", port=80)
 
