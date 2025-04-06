@@ -3,6 +3,9 @@ from flask import Flask, render_template
 from pymongo import MongoClient
 import joblib
 import numpy as np
+import sys
+import logging
+logging.basicConfig(stream=sys.stdout, level=logging.DEBUG)
 
 # Flask App starten
 app = Flask(__name__)
@@ -22,6 +25,7 @@ features = ["wins", "losses", "winPct", "conferenceRank", "divisionRank"]
 
 @app.route("/")
 def home():
+    print("🏀 Home Route geladen")
     teams = list(teams_col.find({}, {"_id": 0, "name": 1, "code": 1, "logo": 1}))
     return render_template("index.html", teams=teams)
 
