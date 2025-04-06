@@ -4,7 +4,7 @@ from pymongo import MongoClient
 import time
 
 # === MongoDB-Verbindung zu Azure ===
-mongo_uri = "mongodb+srv://albanese11:Kosova11@nba-cosmosdb.global.mongocluster.cosmos.azure.com/?tls=true&authMechanism=SCRAM-SHA-256&retrywrites=false&maxIdleTimeMS=120000"
+mongo_uri = "mongodb+srv://albanese11:Microsoft1@nba-cosmosdb.global.mongocluster.cosmos.azure.com/?tls=true&authMechanism=SCRAM-SHA-256&retrywrites=false&maxIdleTimeMS=120000"
 client = MongoClient(mongo_uri)
 db = client["LN1"]
 collection = db["NBA-Games"]
