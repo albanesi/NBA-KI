@@ -21,6 +21,8 @@ db = client["LN1"]
 teams_col = db["NBA-Teams"]
 stats_col = db["NBA-Standings"]  # 2023-Daten für Prediction
 
+teams_col.delete_one({"name": "Home Team Stephen A"})
+
 # === Modell laden
 model = joblib.load("./nba_champion_model.pkl")
 features = ["wins", "losses", "winPct", "conferenceRank", "divisionRank"]
