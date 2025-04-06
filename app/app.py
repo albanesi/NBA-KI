@@ -30,30 +30,42 @@ def update_team_logos():
         "PHI": 'https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse1.mm.bing.net%2Fth%3Fid%3DOIP._BDKPnN4RTMji4Iibt1adgHaEK%26pid%3DApi&f=1&ipt=cb6830505fd22c9f4167449a648c8d07df08686641d58e1a8d414e0ea2643a7a&ipo=images'
     }
 
-    for code, logo_url in logos.items():
-        result = teams_col.update_one({"code": code}, {"$set": {"logo": logo_url}})
-        if result.modified_count > 0:
-            logging.info(f"✅ Logo für {code} aktualisiert.")
-        else:
-            logging.warning(f"⚠️ Kein Update für {code} (evtl. bereits aktuell oder nicht gefunden).")
+# Aktualisiert die Logo-URLs für alle Teams in der MongoDB-Collection anhand des 'logos'-Dictionaries.
+for code, logo_url in logos.items():
+    result = teams_col.update_one({"code": code}, {"$set": {"logo": logo_url}})
+    
+    # Loggt, ob das Update erfolgreich war oder keine Änderung vorgenommen wurde.
+    if result.modified_count > 0:
+        logging.info(f"✅ Logo für {code} aktualisiert.")
+    else:
+        logging.warning(f"⚠️ Kein Update für {code} (evtl. bereits aktuell oder nicht gefunden).")
 
-# === Routen ===
+
+# Route für die Startseite: Holt alle Teams aus der Datenbank (nur Name, Code und Logo) 
+# und rendert sie im 'index.html'-Template.
 @app.route("/")
 def home():
     teams = list(teams_col.find({}, {"_id": 0, "name": 1, "code": 1, "logo": 1}))
     return render_template("index.html", teams=teams)
 
+
+# Route zur Vorhersage der Gewinnwahrscheinlichkeit für ein bestimmtes Team basierend auf Team-Stats aus 2023.
 @app.route("/prediction/<team_code>")
 def prediction(team_code):
     team_stats = stats_col.find_one({"team_code": team_code.upper(), "season": "2023"})
     
+    # Wenn keine Stats gefunden wurden, zeige eine Fehlermeldung im Template an.
     if not team_stats:
         return render_template("prediction.html", error="Keine Stats für dieses Team gefunden.", team=None)
 
+    # Bereite die Eingabedaten für das Modell vor und berechne die Gewinnwahrscheinlichkeit.
     x = np.array([[team_stats[f] for f in features]])
     probability = model.predict_proba(x)[0][1] * 100
 
+    # Rendere das Ergebnis im Template.
     return render_template("prediction.html", team=team_stats, prediction=round(probability, 2))
+
+
 
 # === App starten ===
 if __name__ == "__main__":
